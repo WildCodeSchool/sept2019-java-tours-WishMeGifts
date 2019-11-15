@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<title>Wish me gifts</title>
+    <link rel="stylesheet" th:href="@{style.css}">
+</head>
+
+<body style="background-color: #24BAC7">
+
+    <header th:fragment="top" class="container my-2">
+        <div class="row">
+            <div class="col-12 text-center">
+               <a th:href="@{/}"><img src="img/logo.svg" alt="logo wish me gifts"></a> 
+            </div>
+        </div>
+    </header>
+    <section class="bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 my-5 text-center">
+                <div id="carre"></div> <div id="cercle"></div>
+                    <img src="img/cadeau.svg" alt="image cadeau"> <div id="triangle"></div>
+                    <div id="triangle-1"></div> 
+<div id="triangle-2"></div>
+                    <div id="ovale"></div>
+                    <a th:href="@{/creation}" class="btn btn-dark mt-3">Créer ma liste</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 my-4 ">
+                    <p>Bienvenue ! Créez autant de listes de cadeaux que vous souhaitez pour tous les évènements : naissance, anniversaire, Noël, mariage ou autres. En suivant ces 3 étapes :
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-12 my-4 text-center">
+                    <h3 class="text-white">1 - Je crée ma liste</h3>
+                    <img class="mt-3" src="img/ecrire.svg" alt="icone liste">
+                </div>
+                  <div class="col-md-4 col-12 my-4 text-center">
+                    <h3 class="text-white">2 - J'y saisis mes souhaits</h3>
+                    <img  class="mt-3" src="img/choisir.svg" alt="icone liste">
+                </div>
+                  <div class="col-md-4 col-12 my-4 text-center">
+                    <h3 class="text-white">3 - Je partage ma liste</h3>
+                    <img  class="my-3" src="img/partager.svg" alt="icone liste">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-white ">
+        <div class="container ">
+            <div class="row">
+                <div class="col-12 my-5 text-center">
+                    <p>
+                        Pourquoi ne pas mettre toutes ses envies de cadeaux de noël sur une seule liste sans se limiter à une seule enseigne ?
+                    </p>
+                       <a th:href="@{/creation}" class="btn btn-dark mt-3">Créer ma liste</a>
+                </div>
+            </div>
+        </div>
+    </section>
+       <section th:fragment="foot">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 mt-3 btn btn-default">
+                   <a th:href="@{/mentions}" class="btn btn-outline-light">Mentions légales - CGU </a>
+                  
+                </div>
+                 <div class="col-6 mt-3 btn btn-default">
+                       <a href="mailto:contact@wmg.com" class="btn btn-outline-light">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     </section>
+     <script type="text/javascript" src="script.js"></script>
+    
+</body></html>
