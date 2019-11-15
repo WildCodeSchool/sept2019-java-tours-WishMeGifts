@@ -4,6 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" integrity="sha256-piqEf7Ap7CMps8krDQsSOTZgF+MU/0MPyPW2enj5I40=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<title>Wish me gifts</title>
     <link rel="stylesheet" th:href="@{style.css}">
@@ -26,76 +27,69 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
-
-                <form class="bg-white ">
+                <form class="">
                     <fieldset>
                         <h3 class="text-center mt-4">Occasion :</h3>
-                        <div class="form-check checked ml-4">
+                        
+                        
+                        <div class="form-check checked mx-3">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" disabled="">
+                                <input class="form-check-input" type="checkbox" value="" >
                                 Naissance
                             </label>
                         </div>
-                        <div class="form-check disabled ml-4">
+                        <div class="form-check disabled mx-3">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" disabled="">
+                                <input class="form-check-input" type="checkbox" value="" >
                                 Noël
                             </label>
                         </div>
-                        <div class="form-check disabled ml-4">
+                        <div class="form-check disabled mx-3">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" disabled="">
+                                <input class="form-check-input" type="checkbox" value="" >
                                 Anniversaire
                             </label>
                         </div>
-                        <div class="form-check disabled ml-4">
+                        <div class="form-check disabled mx-3">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value="" disabled="">
+                                <input class="form-check-input" type="checkbox" value="" >
                                 Mariage
                             </label>
                         </div>
 
-                        <div class="form-group mt-4 ml-3">
-                            <label for="exampleInputEmail1">Autres :</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="précisez autre occasion" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-4">
+                        <div class="form-group mt-4 mx-3">
+                            <label for="exampleInputOthers">Autres :</label>
+                            <input type="email" class="form-control" id="exampleInputOthers" aria-describedby="othersHelp" placeholder="précisez autre occasion" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-4">
 
                         </div>
-                        <div class="form-group ml-4">
-                            <label for="exampleInputPassword1">Intitulé de la liste :</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-2">
+                        <div class="form-group mx-3">
+                            <label for="exampleInputIntitule">Intitulé de la liste :</label>
+                            <input type="intitule" class="form-control" id="exampleInputIntitule" placeholder="" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-2">
                         </div>
-                        <div class="form-group ml-4">
-                            <label for="exampleInputPassword1">Date de l'événement :</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-2">
+                        <div class="form-group mx-3">
+                            <label for="exampleInputDate">Date de l'événement :</label>
+                            <input type="date" class="form-control" id="exampleInputdate" placeholder="" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-2">
                         </div>
 
 
-                        <div class="form-group ml-4">
+                        <div class="form-group mx-3">
                             <label for="exampleTextarea">Votre message de bienvenue :</label>
-                            <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-                            <button type="submit" class="btn btn-dark mt-4">Créer</button>
+                            <textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
+                          
                         </div>
 
                         <h3 class="text-center mt-4">Cadeaux :</h3>
-                        <div class="form-group mt-4 ml-3">
-                            <label for="exampleInputEmail1">URL de la page :</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="renseignez la page web ici" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-4">
-
-                        </div>
-                        <div class="form-group mt-4 ml-3">
-                            <label for="exampleInputEmail1">Titre :</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="précisez autre occasion" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-4">
-
-                        </div>
-                        <div class="form-group mt-4 ml-3">
-                            <label for="exampleInputEmail1">Prix :</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="précisez autre occasion" data-kwimpalastatus="alive" data-kwimpalaid="1573810021158-4">
-						<button type="submit" class="btn btn-dark my-4">Ajouter +</button>
-                        </div>
-                        
+                        <div class="form-group mt-4 mx-3">
+                            <label for="exampleInputUrl">URL de la page :</label>
+                            <input type="url" class="form-control" id="exampleInputUrl" aria-describedby="urlHelp" placeholder="renseignez la page web ici  " data-kwimpalastatus="alive" data-kwimpalaid="1573810021158" >
+                            <button type="button" class="btn btn-dark" data-action="add" data-target="#"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btn btn-danger" data-action="delete" data-target="#"><i class="fas fa-trash"></i></button>
+                            
+                      
+                        </div>          
 
                     </fieldset>
+                    <div class="col"><button type="submit" class="btn btn-dark mt-4">Créer</button></div>
                 </form>
 
             </div>

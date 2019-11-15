@@ -4,6 +4,7 @@
 // UP UP DOWN ODWN LEFT RIGHT LEFT RIGHT A B
 // to trigger the confetti with a random color theme.
 // Otherwise the confetti constantly falls.
+
 var onlyOnKonami = false;
 
 $(function() {
@@ -236,3 +237,19 @@ $(function() {
   
   if (!onlyOnKonami) poof();
 });
+
+
+
+//bouton ajouter et supprimer
+$(document).ready(function() {
+    $('[data-action="delete"]').on('click', function(){
+        const target = this.dataset.target;
+        $(target).remove();
+    });
+    
+    $('[data-action="add"]').on('click', function(){
+        const target = this.dataset.target;
+        $(target).add();
+    });
+});
+
