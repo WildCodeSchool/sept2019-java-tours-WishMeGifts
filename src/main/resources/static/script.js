@@ -120,7 +120,7 @@ $(function() {
   container.style.width    = '100%';
   container.style.height   = '0';
   container.style.overflow = 'visible';
-  container.style.zIndex   = '9999';
+  container.style.zIndex   = '999';
 
   // Confetto constructor
   function Confetto(theme) {
@@ -133,8 +133,8 @@ $(function() {
     outerStyle.position = 'absolute';
     outerStyle.width  = (sizeMin + sizeMax * random()) + 'px';
     outerStyle.height = (sizeMin + sizeMax * random()) + 'px';
-    innerStyle.width  = '100%';
-    innerStyle.height = '100%';
+    innerStyle.width  = '50%';
+    innerStyle.height = '50%';
     innerStyle.backgroundColor = theme();
 
     outerStyle.perspective = '50px';
