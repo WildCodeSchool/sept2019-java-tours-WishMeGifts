@@ -15,7 +15,6 @@ public class HomeController {
 	        return "Home";
 	    }
 	    
-	  
 	    
 	    @RequestMapping("mentions")
 	    public String mentions() {
@@ -27,5 +26,7 @@ public class HomeController {
 	    public String creation() {
 	        return "creation";
 	    }
+	    
+	    
 
 }

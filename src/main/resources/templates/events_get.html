@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css"
+	integrity="sha256-piqEf7Ap7CMps8krDQsSOTZgF+MU/0MPyPW2enj5I40="
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
+<title>Wish me gifts</title>
+<link rel="stylesheet" th:href="@{style.css}">
+</head>
+
+<body style="background-color: #24BAC7">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center my-3">
+				<a th:href="@{/}"><img src="/img/logo.svg"
+					alt="logo wish me gifts"></a>
+			</div>
+		</div>
+	</div>
+	<img style="height: 600px; width: 100%; display: block;"
+		th:src="@{/img/cado-unsplash.jpg}" class="mt-0">
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-12 text-center">
+				<div class="jumbotron">
+					<h1 th:text="|Intitule de la liste : ${events.intitule}|">$intitule</h1>
+					<h2 th:text="|Adresse de livraison : ${events.adresse}|">$adresse</h2>
+					<p th:text="|${events.message}|">$message</p>
+					<p
+						th:text="|Date de l'évenement: ${#dates.format(events.dateEvents,'dd/MM/yyyy')}|">$dateEvents</p>
+					<p th:text="|Evénement : ${events.occasion}|">$occasion</p>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 	<div class="container mt-5">
+		<div class="row">
+			<div class="col-12 text-center">
+				<table>
+					<thead>
+						<tr>
+							
+							<th>Nom</th>
+							<th>Adresse de la page:</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="gift : ${gifts}">
+						
+							<td th:text="|Cadeau : ${gift.nom}|">$nom</td>
+							<td th:text="|Lien : ${gift.lien}|">$lien</td>
+							<td><a th:href="@{/gift(id=${gift.id})}">Edit</a></td>
+							<td><a th:href="@{/gift/delete(id=${gift.id})}">Remove</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div> -->
+	<footer class="foot text-center text-white">MADE WITH ❤ BY
+		J.A.L.T © 2019 - V 1.0</footer>
+</body>
+</html>

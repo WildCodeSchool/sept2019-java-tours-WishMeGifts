@@ -17,7 +17,7 @@
 </head>
 
 <body style="background-color: #24BAC7">
-	<header th:replace="home.html :: top"></header>
+	<header th:replace="Home.html :: top"></header>
 
 	<div class="container">
 		<div class="form-group row">
@@ -27,46 +27,39 @@
 			</div>
 		</div>
 	</div>
-	<form class="m-auto">
+	<form action="/events/list" method="post" class="m-auto">
+
 		<fieldset>
 			<legend class="text-center mt-4">Événement </legend>
 			<div class="container my-4 ">
 				<div class="row ml-2">
-					<div class="col-sm-6 form-check checked ">
-						<label class="form-check-label"> <input
-							class="form-check-input" type="checkbox" value="">
-							Naissance
-						</label>
-					</div>
-					<div class="col-6 form-check disabled ">
-						<label class="form-check-label"> <input
-							class="form-check-input" type="checkbox" value=""> Noël
-						</label>
+
+					<div class="col-6  ">
+						<input type="radio" name="occasion" value="Naissance"> <label
+							for="events-occasion">Naissance</label>
 					</div>
 
+					<div class="col-6 ">
+						<input type="radio" name="occasion" value="Noël"> <label
+							for="events-occasion">Noël</label>
+					</div>
 
-					<div class="col-6 form-check disabled ">
-						<label class="form-check-label"> <input
-							class="form-check-input" type="checkbox" value="">
-							Anniversaire
-						</label>
+					<div class="col-6 ">
+						<input type="radio" name="occasion" value="Anniversaire">
+						<label for="events-occasion">Anniversaire</label>
 					</div>
-					<div class="col-6 form-check disabled ">
-						<label class="form-check-label"> <input
-							class="form-check-input" type="checkbox" value="">
-							Mariage
-						</label>
+					<div class="col-6 ">
+						<input type="radio" name="occasion" value="Mariage"> <label
+							for="events-occasion">Mariage</label>
 					</div>
-					<div class="col-6 form-check disabled ">
-						<label class="form-check-label"> <input
-							class="form-check-input" type="checkbox" value="">
-							Bapteme
-						</label>
+
+					<div class="col-6 ">
+						<input type="radio" name="occasion" value="Bapteme"> <label
+							for="events-occasion">Baptême</label>
 					</div>
-					<div class="col-6 form-check disabled ">
-						<label class="form-check-label"> <input
-							class="form-check-input" type="checkbox" value=""> Autres
-						</label>
+					<div class="col-6 ">
+						<input type="radio" name="occasion" value="Autres" checked>
+						<label for="events-occasion">Autres</label>
 					</div>
 
 				</div>
@@ -75,57 +68,69 @@
 		<div class="container">
 			<div class="row">
 
+
 				<div class=" col form-group mt-4">
-					<label for="exampleInputIntitule">Intitulé de la liste </label> <input
-						type="intitule" class="form-control" id="exampleInputIntitule"
-						placeholder="" data-kwimpalastatus="alive"
-						data-kwimpalaid="1573810021158-2">
+					<label for="events-intitule">Intitulé de votre liste </label> <input
+						id="events-intitule" name="intitule" type="text"
+						class="form-control">
 				</div>
 				<div class="col form-group mt-4">
-					<label for="exampleInputDate">Date (événement) </label> <input
-						type="date" class="form-control" id="exampleInputdate"
-						placeholder="" data-kwimpalastatus="alive"
-						data-kwimpalaid="1573810021158-2">
+					<label for="events-dateEvents">Date (événement) </label> <input
+						id="events-dateEvents" name="dateEvents" type="date"
+						class="form-control"
+						placeholder="Merci de saisir la date de votre événement">
+				</div>
+				<div class=" col form-group mt-4">
+					<label for="events-adresse">Adresse pour la livraison </label> <input
+						id="events-adresse" name="adresse" type="text"
+						class="form-control">
 				</div>
 			</div>
 		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col form-group m-auto">
-					<label for="exampleTextarea">Votre message de bienvenue </label>
-					<textarea class="form-control mb-4" id="exampleTextarea" rows="5"></textarea>
+					<label for="events-message">Votre message de bienvenue </label>
+					<textarea id="events-message" name="message"
+						class="form-control mb-4" rows="5"></textarea>
 				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="row">
+	
+
+	<div class="container">
+		<div class="row">
 			<div class="col">
 				
-				<fieldset>
-					<legend class="text-center mt-4">Cadeaux</legend>
-				
-				</fieldset>	<br>
-			</div>
-		</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-12 form-group mt-4 mx-3">
-					<label for="exampleInputUrl">URL de la page :</label> <input
-						type="url" class="form-control" id="exampleInputUrl"
-						aria-describedby="urlHelp"
-						placeholder="renseignez la page web ici  "
-						data-kwimpalastatus="alive" data-kwimpalaid="1573810021158">
-				</div>
+					<fieldset>
+						<legend class="text-center mt-4">Cadeaux</legend>
 
-			</div>
-			<div class="col-12 text-center">
-				<button type="submit" class="btn btn-dark mt-4">Créer</button>
+					</fieldset>
+					<br>
 			</div>
 		</div>
-		
-	</form>
+	</div>
+	
+	<div class="container">
+		<!-- <div class="row">
+			<div class=" col form-group mt-4">
+				<label for="gift-nom">Nom du cadeau :</label> <input id="gift-nom"
+					name="nom" type="text" class="form-control" required>
+			</div>
+			<div class="col form-group mt-4 ">
+				<label for="gift-lien">Adresse de la page web :</label> <input
+					id="gift-lien" name="lien" type="url" class="form-control"
+					placeholder="renseignez la page web ici" required>
+			</div> 
 
-	<footer th:replace="home.html :: foot">Footer</footer>
+		</div> -->
+		<div class="col-12 text-center">
+			<button type="submit" class="btn btn-dark mt-4">Créer</button>
+		</div>
+	</div>
+</form>
+
+
+	<footer th:replace="Home.html :: foot">Footer</footer>
 </body>
 </html>
