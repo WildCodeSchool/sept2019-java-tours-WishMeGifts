@@ -20,7 +20,6 @@ public class GiftRepository {
 	    private final static String DB_USER = "h4rryp0tt3r";
 	    private final static String DB_PASSWORD = "Horcrux4life!";
 
-	    @Override
 	    public Gift save(Gift gift) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
@@ -53,7 +52,6 @@ public class GiftRepository {
 	        return null;
 	    }
 
-	    @Override
 	    public Gift findById(Long id) {
 
 	        try {
@@ -78,7 +76,6 @@ public class GiftRepository {
 	        return null;
 	    }
 
-	    @Override
 	    public List<Gift> findAll() {
 
 	        try {
@@ -106,7 +103,7 @@ public class GiftRepository {
 	        return null;
 	    }
 
-	    @Override
+	    
 	    public Gift update(Gift gift) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
@@ -129,7 +126,7 @@ public class GiftRepository {
 	        return null;
 	    }
 
-	    @Override
+	    
 	    public void deleteById(Long id) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
