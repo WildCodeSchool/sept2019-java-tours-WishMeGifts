@@ -44,15 +44,15 @@
 						<input class="btn btn-dark my-4" type="submit" value="Ajouter">
 				
 				</form>
-			</div>
-		</div>
-		<div class="col card-body bg-white mb-4">
+			
+		
+	
 		<table class="table table-hover">
     <thead>
     <tr class="table-active">
     
-        <th scope="col"> Nom du cadeau : </th> 
-        <th scope="col"> Lien : </th> 
+        <th scope="row"> Cadeau : </th> 
+        <th scope="row"> Lien : </th> 
         <th></th>
         <th></th>
     </tr>
@@ -62,13 +62,14 @@
    
         <td scope="row" th:text="${gift.nom} ">name</td>
         <td th:text="${gift.lien} ">lien</td>
-        <td><a th:href="@{/gift(id=${gift.id})} "> Modifier </a></td>
-        <td><a th:href="@{/gift/delete(id=${gift.id})} "> Supprimer </a></td>
+        <td><a class=" btn btn-dark" th:href="@{/gift(id=${gift.id})} "> <i class="fas fa-pen-square"></i> </a></td>
+        <td><a class=" btn btn-dark" th:href="@{/gift/delete(id=${gift.id})} "> <i class="fas fa-trash-alt"></i> </a></td>
     </tr>
     </tbody>
 </table>
-			
 			</div>
+			</div>
+		
 	</div>
 	<hr>
 
