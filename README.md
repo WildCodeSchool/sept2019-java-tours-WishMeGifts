@@ -29,7 +29,7 @@ Ex:
 
 5 - Ajuster les droits de l'utilisateur 
 
-Ex: GRANT ALL ON wish_me_gifts.* TO nom_user@localhost;
+Ex: GRANT ALL ON wish_me_gifts.* TO 'nom_user'@'localhost';
 
 6 - Importer la Base de données
 
