@@ -14,38 +14,37 @@ Project 2 - Share my wishlist
 
 En remplaçant  *h4rryp0tt3r*  par le nom_user choisi ainsi que  *Horcrux4life!*  par le mot de passe choisi.
 
-3 - crée un user dans mysql:
+3 - créer un user dans mysql:
 
 Ex:
 
-
-*CREATE USER 'nom_user'@'localhost' IDENTIFIED BY 'mot_de_passe' ;*
+    -  CREATE USER 'nom_user'@'localhost' IDENTIFIED BY 'mot_de_passe' ; 
 
 4 - Créer la base 
 
 Ex:
 
-*CREATE DATABASE wish_me_gifts;*
+    - CREATE DATABASE wish_me_gifts;
 
 5 - Ajuster les droits de l'utilisateur 
 
-Ex: GRANT ALL ON wish_me_gifts.* TO 'nom_user'@'localhost';
+Ex:
+    - GRANT ALL ON wish_me_gifts.* TO 'nom_user'@'localhost';
 
 6 - Importer la Base de données
 
 Ex:
 
-**mysql -u nom_user -p -D wish_me_gifts < dump.sql;**
+    - mysql -u nom_user -p -D wish_me_gifts < dump.sql;
 
 7 - Lancer projet
 
 Ex: 
 
-**mvn spring-boot:run**
+    - mvn spring-boot:run
 
 8 - Pour acceder au site:
 
 Ex:
-
-**http://localhost:8080/** 
+    - http://localhost:8080/ 
 
