@@ -2,6 +2,10 @@
 Project 2 - Share my wishlist
 Install project
 1 - clone depôt git
+2 - Modifier dans les fichiers : src/main/java/repository/GiftRepository.java  et EventsRepository.java les lignes 17 et 18 :
+    - private final static String DB_USER = "h4rryp0tt3r";
+    - private final static String DB_PASSWORD = "Horcrux4life!";
+En remplaçant h4rryp0tt3r par le nom_user choisi ainsi que Horcrux4life! par le mot de passe choisi.
 2 - crée un user dans mysql:
 Ex:
 CREATE USER nom_user@localhost IDENTIFIED BY 'mot_de_passe' ;
