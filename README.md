@@ -19,7 +19,7 @@ En remplaçant  *h4rryp0tt3r*  par le nom_user choisi ainsi que  *Horcrux4life!*
 Ex:
 
 
-*CREATE USER nom_user@localhost IDENTIFIED BY 'mot_de_passe' ;*
+*CREATE USER 'nom_user'@'localhost' IDENTIFIED BY 'mot_de_passe' ;*
 
 4 - Créer la base 
 

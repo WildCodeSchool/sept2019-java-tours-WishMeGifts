@@ -1,4 +1,4 @@
-package com.example.controller;
+package controller;
 
 
 import java.sql.Date;
@@ -32,7 +32,7 @@ public class EventsController {
 	    }
 		
 	    @PostMapping("/events/{id}/list")
-	    public String postEvents(Model model,
+	    public String postGifts(Model model,
 	    						@PathVariable long id,
 	    						@ModelAttribute Gift gift
                           	                             
