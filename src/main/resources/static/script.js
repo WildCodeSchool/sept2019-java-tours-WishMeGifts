@@ -1,255 +1,271 @@
-'use strict';
+const TWO_PI = Math.PI * 2;
+const HALF_PI = Math.PI * 0.5;
 
-// If set to true, the user must press
-// UP UP DOWN ODWN LEFT RIGHT LEFT RIGHT A B
-// to trigger the confetti with a random color theme.
-// Otherwise the confetti constantly falls.
+// canvas settings
+var viewWidth = 512,
+    viewHeight = 350,
+    drawingCanvas = document.getElementById("drawing_canvas"),
+    ctx,
+    timeStep = (1/60);
 
-var onlyOnKonami = false;
+Point = function(x, y) {
+    this.x = x || 0;
+    this.y = y || 0;
+};
 
-$(function() {
-  // Globals
-  var $window = $(window)
-    , random = Math.random
-    , cos = Math.cos
-    , sin = Math.sin
-    , PI = Math.PI
-    , PI2 = PI * 2
-    , timer = undefined
-    , frame = undefined
-    , confetti = [];
+Particle = function(p0, p1, p2, p3) {
+    this.p0 = p0;
+    this.p1 = p1;
+    this.p2 = p2;
+    this.p3 = p3;
 
-  // Settings
-  var konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
-    , pointer = 0;
+    this.time = 0;
+    this.duration = 3 + Math.random() * 2;
+    this.color =  '#' + Math.floor((Math.random() * 0xffffff)).toString(16);
 
-  var particles = 150
-    , spread = 40
-    , sizeMin = 3
-    , sizeMax = 12 - sizeMin
-    , eccentricity = 10
-    , deviation = 100
-    , dxThetaMin = -.1
-    , dxThetaMax = -dxThetaMin - dxThetaMin
-    , dyMin = .13
-    , dyMax = .18
-    , dThetaMin = .4
-    , dThetaMax = .7 - dThetaMin;
+    this.w = 8;
+    this.h = 6;
 
-  var colorThemes = [
-    function() {
-      return color(200 * random()|0, 200 * random()|0, 200 * random()|0);
-    }, function() {
-      var black = 200 * random()|0; return color(200, black, black);
-    }, function() {
-      var black = 200 * random()|0; return color(black, 200, black);
-    }, function() {
-      var black = 200 * random()|0; return color(black, black, 200);
-    }, function() {
-      return color(200, 100, 200 * random()|0);
-    }, function() {
-      return color(200 * random()|0, 200, 200);
-    }, function() {
-      var black = 256 * random()|0; return color(black, black, black);
-    }, function() {
-      return colorThemes[random() < .5 ? 1 : 2]();
-    }, function() {
-      return colorThemes[random() < .5 ? 3 : 5]();
-    }, function() {
-      return colorThemes[random() < .5 ? 2 : 4]();
+    this.complete = false;
+};
+
+Particle.prototype = {
+    update:function() {
+        this.time = Math.min(this.duration, this.time + timeStep);
+
+        var f = Ease.outCubic(this.time, 0, 1, this.duration);
+        var p = cubeBezier(this.p0, this.p1, this.p2, this.p3, f);
+
+        var dx = p.x - this.x;
+        var dy = p.y - this.y;
+
+        this.r =  Math.atan2(dy, dx) + HALF_PI;
+        this.sy = Math.sin(Math.PI * f * 10);
+        this.x = p.x;
+        this.y = p.y;
+
+        this.complete = this.time === this.duration;
+    },
+    draw:function() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.r);
+        ctx.scale(1, this.sy);
+
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.w * 0.5, -this.h * 0.5, this.w, this.h);
+
+        ctx.restore();
     }
-  ];
-  function color(r, g, b) {
-    return 'rgb(' + r + ',' + g + ',' + b + ')';
-  }
+};
 
-  // Cosine interpolation
-  function interpolation(a, b, t) {
-    return (1-cos(PI*t))/2 * (b-a) + a;
-  }
+Loader = function(x, y) {
+    this.x = x;
+    this.y = y;
 
-  // Create a 1D Maximal Poisson Disc over [0, 1]
-  var radius = 1/eccentricity, radius2 = radius+radius;
-  function createPoisson() {
-    // domain is the set of points which are still available to pick from
-    // D = union{ [d_i, d_i+1] | i is even }
-    var domain = [radius, 1-radius], measure = 1-radius2, spline = [0, 1];
-    while (measure) {
-      var dart = measure * random(), i, l, interval, a, b, c, d;
+    this.r = 24;
+    this._progress = 0;
 
-      // Find where dart lies
-      for (i = 0, l = domain.length, measure = 0; i < l; i += 2) {
-        a = domain[i], b = domain[i+1], interval = b-a;
-        if (dart < measure+interval) {
-          spline.push(dart += a-measure);
-          break;
-        }
-        measure += interval;
-      }
-      c = dart-radius, d = dart+radius;
+    this.complete = false;
+};
 
-      // Update the domain
-      for (i = domain.length-1; i > 0; i -= 2) {
-        l = i-1, a = domain[l], b = domain[i];
-        // c---d          c---d  Do nothing
-        //   c-----d  c-----d    Move interior
-        //   c--------------d    Delete interval
-        //         c--d          Split interval
-        //       a------b
-        if (a >= c && a < d)
-          if (b > d) domain[l] = d; // Move interior (Left case)
-          else domain.splice(l, 2); // Delete interval
-        else if (a < c && b > c)
-          if (b <= d) domain[i] = c; // Move interior (Right case)
-          else domain.splice(i, 0, c, d); // Split interval
-      }
+Loader.prototype = {
+    reset:function() {
+        this._progress = 0;
+        this.complete = false;
+    },
+    set progress(p) {
+        this._progress = p < 0 ? 0 : (p > 1 ? 1 : p);
 
-      // Re-measure the domain
-      for (i = 0, l = domain.length, measure = 0; i < l; i += 2)
-        measure += domain[i+1]-domain[i];
+        this.complete = this._progress === 1;
+    },
+    get progress() {
+        return this._progress;
+    },
+    draw:function() {
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, -HALF_PI, TWO_PI * this._progress - HALF_PI);
+        ctx.lineTo(this.x, this.y);
+        ctx.closePath();
+        ctx.fill();
+    }
+};
+
+// pun intended
+Exploader = function(x, y) {
+    this.x = x;
+    this.y = y;
+
+    this.startRadius = 24;
+
+    this.time = 0;
+    this.duration = 0.4;
+    this.progress = 0;
+
+    this.complete = false;
+};
+
+Exploader.prototype = {
+    reset:function() {
+        this.time = 0;
+        this.progress = 0;
+        this.complete = false;
+    },
+    update:function() {
+        this.time = Math.min(this.duration, this.time + timeStep);
+        this.progress = Ease.inBack(this.time, 0, 1, this.duration);
+
+        this.complete = this.time === this.duration;
+    },
+    draw:function() {
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.startRadius * (1 - this.progress), 0, TWO_PI);
+        ctx.fill();
+    }
+};
+
+var particles = [],
+    loader,
+    exploader,
+    phase = 0;
+
+function initDrawingCanvas() {
+    drawingCanvas.width = viewWidth;
+    drawingCanvas.height = viewHeight;
+    ctx = drawingCanvas.getContext('2d');
+
+    createLoader();
+    createExploader();
+    createParticles();
+}
+
+function createLoader() {
+    loader = new Loader(viewWidth * 0.5, viewHeight * 0.5);
+}
+
+function createExploader() {
+    exploader = new Exploader(viewWidth * 0.5, viewHeight * 0.5);
+}
+
+function createParticles() {
+    for (var i = 0; i < 128; i++) {
+        var p0 = new Point(viewWidth * 0.5, viewHeight * 0.5);
+        var p1 = new Point(Math.random() * viewWidth, Math.random() * viewHeight);
+        var p2 = new Point(Math.random() * viewWidth, Math.random() * viewHeight);
+        var p3 = new Point(Math.random() * viewWidth, viewHeight + 64);
+
+        particles.push(new Particle(p0, p1, p2, p3));
+    }
+}
+
+function update() {
+
+    switch (phase) {
+        case 0:
+            loader.progress += (1/45);
+            break;
+        case 1:
+            exploader.update();
+            break;
+        case 2:
+            particles.forEach(function(p) {
+                p.update();
+            });
+            break;
+    }
+}
+
+function draw() {
+    ctx.clearRect(0, 0, viewWidth, viewHeight);
+
+    switch (phase) {
+        case 0:
+            loader.draw();
+            break;
+        case 1:
+            exploader.draw();
+            break;
+        case 2:
+            particles.forEach(function(p) {
+                p.draw();
+            });
+        break;
+    }
+}
+
+window.onload = function() {
+    initDrawingCanvas();
+    requestAnimationFrame(loop);
+};
+
+function loop() {
+    update();
+    draw();
+
+    if (phase === 0 && loader.complete) {
+        phase = 1;
+    }
+    else if (phase === 1 && exploader.complete) {
+        phase = 2;
+    }
+    else if (phase === 2 && checkParticlesComplete()) {
+        // reset
+        phase = 0;
+        loader.reset();
+        exploader.reset();
+        particles.length = 0;
+        createParticles();
     }
 
-    return spline.sort();
-  }
+    requestAnimationFrame(loop);
+}
 
-  // Create the overarching container
-  var container = document.createElement('div');
-  container.style.position = 'fixed';
-  container.style.top      = '0';
-  container.style.left     = '0';
-  container.style.width    = '100%';
-  container.style.height   = '0';
-  container.style.overflow = 'visible';
-  container.style.zIndex   = '999';
-
-  // Confetto constructor
-  function Confetto(theme) {
-    this.frame = 0;
-    this.outer = document.createElement('div');
-    this.inner = document.createElement('div'); //here is 
-    this.outer.appendChild(this.inner);
-
-    var outerStyle = this.outer.style, innerStyle = this.inner.style;
-    outerStyle.position = 'absolute';
-    outerStyle.width  = (sizeMin + sizeMax * random()) + 'px';
-    outerStyle.height = (sizeMin + sizeMax * random()) + 'px';
-    innerStyle.width  = '50%';
-    innerStyle.height = '50%';
-    innerStyle.backgroundColor = theme();
-
-    outerStyle.perspective = '50px';
-    outerStyle.transform = 'rotate(' + (360 * random()) + 'deg)';
-    this.axis = 'rotate3D(' +
-      cos(360 * random()) + ',' +
-      cos(360 * random()) + ',0,';
-    this.theta = 360 * random();
-    this.dTheta = dThetaMin + dThetaMax * random();
-    innerStyle.transform = this.axis + this.theta + 'deg)';
-
-    this.x = $window.width() * random();
-    this.y = -deviation;
-    this.dx = sin(dxThetaMin + dxThetaMax * random());
-    this.dy = dyMin + dyMax * random();
-    outerStyle.left = this.x + 'px';
-    outerStyle.top  = this.y + 'px';
-
-    // Create the periodic spline
-    this.splineX = createPoisson();
-    this.splineY = [];
-    for (var i = 1, l = this.splineX.length-1; i < l; ++i)
-      this.splineY[i] = deviation * random();
-    this.splineY[0] = this.splineY[l] = deviation * random();
-
-    this.update = function(height, delta) {
-      this.frame += delta;
-      this.x += this.dx * delta;
-      this.y += this.dy * delta;
-      this.theta += this.dTheta * delta;
-
-      // Compute spline and convert to polar
-      var phi = this.frame % 7777 / 7777, i = 0, j = 1;
-      while (phi >= this.splineX[j]) i = j++;
-      var rho = interpolation(
-        this.splineY[i],
-        this.splineY[j],
-        (phi-this.splineX[i]) / (this.splineX[j]-this.splineX[i])
-      );
-      phi *= PI2;
-
-      outerStyle.left = this.x + rho * cos(phi) + 'px';
-      outerStyle.top  = this.y + rho * sin(phi) + 'px';
-      innerStyle.transform = this.axis + this.theta + 'deg)';
-      return this.y > height+deviation;
-    };
-  }
-
-  function poof() {
-    if (!frame) {
-      // Append the container
-      document.body.appendChild(container);
-
-      // Add confetti
-      var theme = colorThemes[onlyOnKonami ? colorThemes.length * random()|0 : 0]
-        , count = 0;
-      (function addConfetto() {
-        if (onlyOnKonami && ++count > particles)
-          return timer = undefined;
-
-        var confetto = new Confetto(theme);
-        confetti.push(confetto);
-        container.appendChild(confetto.outer);
-        timer = setTimeout(addConfetto, spread * random());
-      })(0);
-
-      // Start the loop
-      var prev = undefined;
-      requestAnimationFrame(function loop(timestamp) {
-        var delta = prev ? timestamp - prev : 0;
-        prev = timestamp;
-        var height = $window.height();
-
-        for (var i = confetti.length-1; i >= 0; --i) {
-          if (confetti[i].update(height, delta)) {
-            container.removeChild(confetti[i].outer);
-            confetti.splice(i, 1);
-          }
-        }
-
-        if (timer || confetti.length)
-          return frame = requestAnimationFrame(loop);
-
-        // Cleanup
-        document.body.removeChild(container);
-        frame = undefined;
-      });
+function checkParticlesComplete() {
+    for (var i = 0; i < particles.length; i++) {
+        if (particles[i].complete === false) return false;
     }
-  }
+    return true;
+}
 
-  $window.keydown(function(event) {
-    pointer = konami[pointer] === event.which
-      ? pointer+1
-      : +(event.which === konami[0]);
-    if (pointer === konami.length) {
-      pointer = 0;
-      poof();
+// math and stuff
+
+/**
+ * easing equations from http://gizma.com/easing/
+ * t = current time
+ * b = start value
+ * c = delta value
+ * d = duration
+ */
+var Ease = {
+    inCubic:function (t, b, c, d) {
+        t /= d;
+        return c*t*t*t + b;
+    },
+    outCubic:function(t, b, c, d) {
+        t /= d;
+        t--;
+        return c*(t*t*t + 1) + b;
+    },
+    inOutCubic:function(t, b, c, d) {
+        t /= d/2;
+        if (t < 1) return c/2*t*t*t + b;
+        t -= 2;
+        return c/2*(t*t*t + 2) + b;
+    },
+    inBack: function (t, b, c, d, s) {
+        s = s || 1.70158;
+        return c*(t/=d)*t*((s+1)*t - s) + b;
     }
-  });
-  
-  if (!onlyOnKonami) poof();
-});
+};
 
+function cubeBezier(p0, c0, c1, p1, t) {
+    var p = new Point();
+    var nt = (1 - t);
 
+    p.x = nt * nt * nt * p0.x + 3 * nt * nt * t * c0.x + 3 * nt * t * t * c1.x + t * t * t * p1.x;
+    p.y = nt * nt * nt * p0.y + 3 * nt * nt * t * c0.y + 3 * nt * t * t * c1.y + t * t * t * p1.y;
 
-//bouton ajouter et supprimer
-$(document).ready(function() {
-    $('[data-action="delete"]').on('click', function(){
-        const target = this.dataset.target;
-        $(target).remove();
-    });
-    
-    $('[data-action="add"]').on('click', function(){
-        const target = this.dataset.target;
-        $(target).add();
-    });
-});
-
+    return p;
+}
