@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.controller;
 
 
 
@@ -26,7 +26,6 @@ public class HomeController {
 	    public String creation() {
 	        return "creation";
 	    }
-	    
-	    
+	    	  
 
 }

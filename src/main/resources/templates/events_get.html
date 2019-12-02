@@ -1,73 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css"
-	integrity="sha256-piqEf7Ap7CMps8krDQsSOTZgF+MU/0MPyPW2enj5I40="
-	crossorigin="anonymous" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous" />
-<title>Wish me gifts</title>
-<link rel="stylesheet" th:href="@{style.css}">
-</head>
+<head th:insert="general.html :: head"></head>
 
 <body style="background-color: #24BAC7">
 	<div class="container">
 		<div class="row">
-			<div class="col-12 text-center my-3">
+			<div class="col-12 text-center my-4">
 				<a th:href="@{/}"><img src="/img/logo.svg"
-					alt="logo wish me gifts"></a>
+					alt="logo wish me gifts"></a>					
+					
 			</div>
 		</div>
 	</div>
 	<img style="height: 600px; width: 100%; display: block;"
 		th:src="@{/img/cado-unsplash.jpg}" class="mt-0">
-	<div class="container mt-5">
+			<div class="container mt-5">
 		<div class="row">
-			<div class="col-12 text-center">
+			<div class="col-12 text-center lead">
 				<div class="jumbotron">
-					<h1 th:text="|Intitule de la liste : ${events.intitule}|">$intitule</h1>
-					<h2 th:text="|Adresse de livraison : ${events.adresse}|">$adresse</h2>
-					<p th:text="|${events.message}|">$message</p>
+					<h1 th:text="| ${event.intitule}|">$intitule</h1>
+					<h2 th:text="| ${event.adresse}|">$adresse</h2>
+					<p th:text="|${event.message}|">$message</p>
 					<p
-						th:text="|Date de l'évenement: ${#dates.format(events.dateEvents,'dd/MM/yyyy')}|">$dateEvents</p>
-					<p th:text="|Evénement : ${events.occasion}|">$occasion</p>
+						th:text="|Date de l'évenement: ${#dates.format(event.dateEvent,'dd/MM/yyyy')}|">$dateEvent</p>
+					<p th:text="| ${event.occasion}|">$occasion</p>
+					<hr>
 				</div>
 			</div>
 		</div>
 	</div>
-<!-- 	<div class="container mt-5">
+		<hr>
+	<div class="container">
 		<div class="row">
-			<div class="col-12 text-center">
-				<table>
-					<thead>
-						<tr>
-							
-							<th>Nom</th>
-							<th>Adresse de la page:</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="gift : ${gifts}">
-						
-							<td th:text="|Cadeau : ${gift.nom}|">$nom</td>
-							<td th:text="|Lien : ${gift.lien}|">$lien</td>
-							<td><a th:href="@{/gift(id=${gift.id})}">Edit</a></td>
-							<td><a th:href="@{/gift/delete(id=${gift.id})}">Remove</a></td>
-						</tr>
-					</tbody>
-				</table>
+			<div class="col">
+				<h1 class="text-center my-4">Vos cadeaux</h1>
+				
+				<form method="post" th:action="@{'/events/'+${event.id} +'/list'}" th:object="${gift}">
+				
+					<label for="gift-nom">Nom du cadeau:</label> 
+					<input class="form-control mt-2" id="gift-nom" name="nom" placeholder="Ex: pyjama bleu " required th:field="*{nom}" type="text">
+					 <label class="mt-2" for="gift-lien">Lien de la page web :</label> <br>
+						<input class="form-control mt-2" id="gift-lien" name="lien" placeholder="Adresse de votre page web" th:field="*{lien}" type="url"> 
+						<input class="btn btn-dark my-4" type="submit" value="Ajouter">
+				
+				</form>
 			</div>
 		</div>
-	</div> -->
-	<footer class="foot text-center text-white">MADE WITH ❤ BY
-		J.A.L.T © 2019 - V 1.0</footer>
+		<div class="col card-body bg-white mb-4">
+		<table class="table table-hover">
+    <thead>
+    <tr class="table-active">
+    
+        <th scope="col"> Nom du cadeau : </th> 
+        <th scope="col"> Lien : </th> 
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="table-light" th:each="gift : ${giftList}">
+   
+        <td scope="row" th:text="${gift.nom} ">name</td>
+        <td th:text="${gift.lien} ">lien</td>
+        <td><a th:href="@{/gift(id=${gift.id})} "> Modifier </a></td>
+        <td><a th:href="@{/gift/delete(id=${gift.id})} "> Supprimer </a></td>
+    </tr>
+    </tbody>
+</table>
+			
+			</div>
+	</div>
+	<hr>
+
+	
+	
+	<footer class="text-center mt-4">MADE WITH ❤ BY J.A.L.T CGU ©
+		2019 - V 1.0</footer>
+
+
 </body>
 </html>

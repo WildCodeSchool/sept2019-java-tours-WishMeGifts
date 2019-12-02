@@ -1,17 +1,17 @@
 package repository;
-
-import java.util.List;
-
-public interface CrudDao<T> {
 	
-	T save(T entity);
+	import java.util.List;
 
-	T findById(Long id);
+	public interface CrudDao<T> {
+		
+		T save(T entity);
 
-	List<T> findAll();
+		T findById(Long id);
 
-	T update(T entity);
+		List<T> findAll();
 
-	void deleteById(Long id);
+		T update(T entity);
+
+		void deleteById(Long id);
 
 }

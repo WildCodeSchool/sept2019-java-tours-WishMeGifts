@@ -6,24 +6,21 @@ public class Gift {
 	private Long id;
 	private String nom;
 	private String lien;
-	
+	private Long id_event_list;
 	
 	//Constructeur
-	public Gift(Long id, String nom, String lien) {
+	
+	public Gift(Long id, String nom, String lien, Long id_event_list) {
 	
 		this.id = id;
 		this.nom = nom;
 		this.lien = lien;
+		this.id_event_list= id_event_list;
 	}
-	
 	
 	public Gift() {
-		
-		
-		// TODO Auto-generated constructor stub
+			
 	}
-
-
 	//Getters et setters
 	public Long getId() {
 		return id;
@@ -47,6 +44,15 @@ public class Gift {
 
 	public void setLien(String lien) {
 		this.lien = lien;
+	}
+	
+	public Long getId_event_list() {
+		return id_event_list;
+	}
+
+
+	public void setId_event_list(Long id_event_list) {
+		this.id_event_list = id_event_list;
 	}
 
 }

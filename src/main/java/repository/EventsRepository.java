@@ -8,30 +8,47 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import entity.Events;
-
+import entity.Event;
 
 
 public class EventsRepository {
 	
-	private final static String DB_URL = "jdbc:mysql://localhost:3306/spring_jdbc_quest?serverTimezone=GMT";
+	private final static String DB_URL = "jdbc:mysql://localhost:3306/wish_me_gifts?serverTimezone=GMT";
     private final static String DB_USER = "h4rryp0tt3r";
     private final static String DB_PASSWORD = "Horcrux4life!";
+    
+    public void deleteById(Long id) {
+        try {
+            Connection connection = DriverManager.getConnection(
+                    DB_URL, DB_USER, DB_PASSWORD
+            );
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM gift WHERE id=?"
+            );
+            statement.setLong(1, id);
 
-    public Events save( String intitule, String adresse,String message, Date dateEvents, String occasion) {
+            if (statement.executeUpdate() != 1) {
+                throw new SQLException("failed to delete data");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Event save( String intitule, String adresse,String message, Date dateEvent, String occasion) {
     	try {
             Connection connection = DriverManager.getConnection(
                     DB_URL, DB_USER, DB_PASSWORD
             );
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO events ( intitule, adresse,  message, DateEvents,occasion) VALUES (?, ?, ?, ?, ?)",
+                    "INSERT INTO event ( intitule, adresse,  message, dateEvent,occasion) VALUES (?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             );
            
             statement.setString(1, intitule);
             statement.setString(2, adresse);
             statement.setString(3, message);
-            statement.setDate(4, dateEvents);
+            statement.setDate(4, dateEvent);
             statement.setString(5, occasion);
          
 
@@ -43,7 +60,7 @@ public class EventsRepository {
 
             if (generatedKeys.next()) {
                 Long id = generatedKeys.getLong(1);
-                return new Events(id, intitule, adresse, message, dateEvents, occasion);
+                return new Event(id, intitule, adresse, message, dateEvent, occasion);
             } else {
                 throw new SQLException("failed to get inserted id");
             }
@@ -54,14 +71,14 @@ public class EventsRepository {
         return null;
     }
     
-    public Events findById(Long id) {
+    public Event findById(Long id) {
 
         try {
             Connection connection = DriverManager.getConnection(
                     DB_URL, DB_USER, DB_PASSWORD
             );
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM events WHERE id = ?;"
+                    "SELECT * FROM event WHERE id = ?;"
             );
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -72,10 +89,10 @@ public class EventsRepository {
             	String intitule = resultSet.getString("intitule");
                 String adresse = resultSet.getString("adresse");             
                 String message = resultSet.getString("message");
-                Date dateEvents = resultSet.getDate("dateEvents");
+                Date dateEvent = resultSet.getDate("dateEvent");
                 String occasion = resultSet.getString("occasion"); 
                
-                return new Events(id,intitule, adresse,  message, dateEvents, occasion);
+                return new Event(id,intitule, adresse,  message, dateEvent, occasion);
             }
         } catch (SQLException e) {
             e.printStackTrace();

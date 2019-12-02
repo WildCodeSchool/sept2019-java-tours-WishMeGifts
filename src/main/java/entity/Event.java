@@ -4,26 +4,28 @@ import java.lang.String;
 import java.sql.Date;
 
 
-public class Events {
+public class Event {
 	
 	  	private Long id;
 	    private String intitule;
 	    private String adresse;
 	    private String message;
-	    private Date dateEvents;
+	    private Date dateEvent;
 	    private String occasion;
 	    
 	    //constructor
-	    public Events(Long id, String intitule, String adresse,  String message, Date dateEvents, String occasion) {
+	    public Event(Long id, String intitule, String adresse,  String message, Date dateEvent, String occasion) {
 	        this.id = id;        
 	        this.intitule = intitule;
 	        this.adresse = adresse;
 	        this.message = message;
-	        this.setDateEvents(dateEvents);
+	        this.setDateEvent(dateEvent);
 	        this.occasion = occasion;
 	      
 	    }
-	    
+	    public Event() {
+	    	
+	    }
 	    
 	    //getters and setters
 	    
@@ -64,13 +66,13 @@ public class Events {
 		}
 
 
-		public Date getDateEvents() {
-			return dateEvents;
+		public Date getDateEvent() {
+			return dateEvent;
 		}
 
 
-		public void setDateEvents(Date dateEvents) {
-			this.dateEvents = dateEvents;
+		public void setDateEvent(Date dateEvent) {
+			this.dateEvent = dateEvent;
 		}
 		
 		public String getOccasion() {

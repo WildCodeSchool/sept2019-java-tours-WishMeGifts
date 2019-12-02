@@ -8,31 +8,31 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import entity.Gift;
 
-
-
-public class GiftRepository {
+public class GiftRepository{
 	
 
-	    private final static String DB_URL = "jdbc:mysql://localhost:3306/spring_jdbc_quest?serverTimezone=GMT";
+	    private final static String DB_URL = "jdbc:mysql://localhost:3306/wish_me_gifts?serverTimezone=GMT";
 	    private final static String DB_USER = "h4rryp0tt3r";
 	    private final static String DB_PASSWORD = "Horcrux4life!";
-
-	    public Gift save(Gift gift) {
+	    
+	 
+	    public Gift save(String nom, String lien, Long id_event_list) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
 	                    DB_URL, DB_USER, DB_PASSWORD
 	            );
 	            PreparedStatement statement = connection.prepareStatement(
-	                    "INSERT INTO gift (nom, lien) VALUES (?, ?)",
+	                    "INSERT INTO gift (nom, lien, id_event_list) VALUES (?, ?, ?)",
 	                    Statement.RETURN_GENERATED_KEYS
 	            );
-	            statement.setString(1, gift.getNom());
-	            statement.setString(2, gift.getLien());
 	            
-
+	            statement.setString(1, nom);
+	            statement.setString(2, lien);
+	            statement.setLong(3, id_event_list);
+	            
+	       
 	            if (statement.executeUpdate() != 1) {
 	                throw new SQLException("failed to insert data");
 	            }
@@ -41,8 +41,7 @@ public class GiftRepository {
 
 	            if (generatedKeys.next()) {
 	                Long id = generatedKeys.getLong(1);
-	                gift.setId(id);
-	                return gift;
+	                return new Gift(id, nom, lien, id_event_list);
 	            } else {
 	                throw new SQLException("failed to get inserted id");
 	            }
@@ -51,31 +50,35 @@ public class GiftRepository {
 	        }
 	        return null;
 	    }
-
-	    public Gift findById(Long id) {
+	    
+	 
+	    public Gift findByEventId(Long event_id) {
 
 	        try {
 	            Connection connection = DriverManager.getConnection(
 	                    DB_URL, DB_USER, DB_PASSWORD
 	            );
 	            PreparedStatement statement = connection.prepareStatement(
-	                    "SELECT * FROM gift WHERE id = ?;"
+	                    "SELECT * FROM gift WHERE id_event_list = ?;"
 	            );
-	            statement.setLong(1, id);
+	            statement.setLong(1, event_id);
 	            ResultSet resultSet = statement.executeQuery();
 
 	            if (resultSet.next()) {
 	                String nom = resultSet.getString("nom");
 	                String lien = resultSet.getString("lien");
-	                
-	                return new Gift(id, nom, lien);
+	                Long id_event_list = resultSet.getLong("id_event_list");
+	                Long id = resultSet.getLong("id");
+
+	                return new Gift(id, nom, lien, id_event_list);
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
 	        return null;
 	    }
-
+	    
+	
 	    public List<Gift> findAll() {
 
 	        try {
@@ -93,8 +96,8 @@ public class GiftRepository {
 	                Long id = resultSet.getLong("id");
 	                String nom = resultSet.getString("nom");
 	                String lien = resultSet.getString("lien");
-	                
-	                gifts.add(new Gift(id, nom, lien));
+	                Long id_event_list = resultSet.getLong("id_event_list");
+	                gifts.add(new Gift(id, nom, lien, id_event_list));
 	            }
 	            return gifts;
 	        } catch (SQLException e) {
@@ -103,30 +106,31 @@ public class GiftRepository {
 	        return null;
 	    }
 
-	    
-	    public Gift update(Gift gift) {
+	 
+	    public Gift update( String nom, String lien, Long id_event_list, Long id) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
 	                    DB_URL, DB_USER, DB_PASSWORD
 	            );
 	            PreparedStatement statement = connection.prepareStatement(
-	                    "UPDATE gift SET nom=?, lien=? WHERE id=?"
+	                    "UPDATE gift SET nom=?, lien=?, id_event_list=? WHERE id=?"
 	            );
-	            statement.setString(1, gift.getNom());
-	            statement.setString(2, gift.getLien());
-	            statement.setLong(3, gift.getId());
+	            statement.setString(1, nom);
+	            statement.setString(2, lien);
+	            statement.setLong(3, id_event_list);
+	            statement.setLong(4, id);
 
 	            if (statement.executeUpdate() != 1) {
 	                throw new SQLException("failed to update data");
 	            }
-	            return gift;
+	            return new Gift(id, nom, lien, id_event_list);
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
 	        return null;
 	    }
 
-	    
+
 	    public void deleteById(Long id) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
@@ -143,12 +147,6 @@ public class GiftRepository {
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-	    }
-
-		public Object save(String nom, String lien) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-	
+	    }		
 
 }
