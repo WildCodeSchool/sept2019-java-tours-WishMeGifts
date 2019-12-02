@@ -42,13 +42,6 @@ public class EventsController {
 	        return  "redirect:/events/"+ currentEvent.getId()+ "/list";
 	    }
 	    
-	    @GetMapping("/events/{id}/list/delete")
-	    public String deleteGift(@RequestParam Long id) {
-	    	Event currentEvent = repository.findById(id);
-	        giftrepository.deleteById(id);
-
-	        return "redirect:/events/"+ currentEvent.getId()+ "/list";
-	    }
 	    
 	    @PostMapping("/events/list/create")
 	    public String postEvents(Model model,
