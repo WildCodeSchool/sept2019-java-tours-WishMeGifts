@@ -3,8 +3,64 @@
 <head th:insert="general.html :: head"></head>
 
 <body style="background-color: #24BAC7">
-<header th:replace="general.html :: top"></header>
+	<header th:fragment="top" class="container my-2">
+		<div class="row">
+			<div class="col-12 text-center">
+				<a th:href="@{http://wish.lydesign.fr}"><img th:src="@{/img/logo.png}"
+					alt="logo wish me gifts"></a>
+			</div>
+		</div>
+	</header>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center my-4">
+				<a th:href="@{/}"><img src="/img/logo.svg"
+					alt="logo wish me gifts"></a>					
+					
+			</div>
+		</div>
+	</div>
+	<img style="height: 600px; width: 100%; display: block;"
+		th:src="@{/img/cado-unsplash.jpg}" class="mt-0">
+			<div class="container mt-5">
+		<div class="row">
+			<div class="col-12 text-center lead">
+				<div class="jumbotron">
+					<h1 th:text="| ${event.intitule}|">$intitule</h1>
+					<h2 th:text="| ${event.adresse}|">$adresse</h2>
+					<p th:text="|${event.message}|">$message</p>
+					<p
+						th:text="|Date de l'évenement: ${#dates.format(event.dateEvent,'dd/MM/yyyy')}|">$dateEvent</p>
+					<p th:text="| ${event.occasion}|">$occasion</p>
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+		<hr>
+		<table class="table table-hover">
+    <thead>
+    <tr class="table-active">
+    
+        <th scope="row"> Cadeau : </th> 
+        <th scope="row"> Lien : </th> 
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="table-light" th:each="gift : ${giftList}">
+   
+        <td scope="row" th:text="${gift.nom} ">name</td>
+        <td th:text="${gift.lien} ">lien</td>
+        <td><a class=" btn btn-dark" th:href="@{/gift(id=${gift.id})} "> <i class="fas fa-pen-square"></i> </a></td>
+        <td><a class=" btn btn-dark" th:href="@{/gift/delete(id=${gift.id})} "> <i class="fas fa-trash-alt"></i> </a></td>
+    </tr>
+    </tbody>
+</table>
 
-    <section th:replace="general.html :: foot"></section>
+   <footer class="text-center mt-4">MADE WITH ❤ BY J.A.L.T CGU ©
+		2019 - V 1.0</footer>
 </body>
 </html>
