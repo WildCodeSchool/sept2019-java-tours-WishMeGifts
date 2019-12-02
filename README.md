@@ -2,9 +2,9 @@
 
 Project 2 - Share my wishlist
 
-#Install project
+# Install project
 
-##1 - clone depôt git
+## 1 - clone depôt git
 
 2 - Modifier dans les fichiers : src/main/java/repository/GiftRepository.java  et EventsRepository.java les lignes 17 et 18 :
 
