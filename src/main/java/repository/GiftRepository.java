@@ -13,7 +13,7 @@ import entity.Gift;
 public class GiftRepository{
 	
 
-	    private final static String DB_URL = "jdbc:mysql://localhost:3306/wish_me_gifts?serverTimezone=GMT";
+	    private final static String DB_URL = "jdbc:mysql://localhost:3306/WishMeAGiftBaby?serverTimezone=GMT";
 	    private final static String DB_USER = "h4rryp0tt3r";
 	    private final static String DB_PASSWORD = "Horcrux4life!";
 	    
@@ -51,9 +51,13 @@ public class GiftRepository{
 	        return null;
 	    }
 	    
-	 
-	    public Gift findByEventId(Long event_id) {
-
+	 /**
+	  * Renvoi un tableau de cadeaux correspondant à l'id de l'évènement fournit en paramètre. 
+	  * @param event_id : identifiant de l'évènement
+	  * @return : une liste de Gift potentiellement vide si aucun cadeaux n'est associé à l'évènement 
+	  * ou null s'il y a un problème d'accès à la base.
+	  */
+	    public List<Gift> findAllByEventId(long event_id) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
 	                    DB_URL, DB_USER, DB_PASSWORD
@@ -63,15 +67,16 @@ public class GiftRepository{
 	            );
 	            statement.setLong(1, event_id);
 	            ResultSet resultSet = statement.executeQuery();
-
-	            if (resultSet.next()) {
+				List<Gift> gifts = new ArrayList<>();
+	            while (resultSet.next()) {
 	                String nom = resultSet.getString("nom");
 	                String lien = resultSet.getString("lien");
-	                Long id_event_list = resultSet.getLong("id_event_list");
 	                Long id = resultSet.getLong("id");
-
-	                return new Gift(id, nom, lien, id_event_list);
-	            }
+					gifts.add(new Gift(id, nom, lien, event_id));
+				}
+				statement.close();
+				connection.close();
+				return gifts;
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
@@ -80,7 +85,6 @@ public class GiftRepository{
 	    
 	
 	    public List<Gift> findAll() {
-
 	        try {
 	            Connection connection = DriverManager.getConnection(
 	                    DB_URL, DB_USER, DB_PASSWORD
