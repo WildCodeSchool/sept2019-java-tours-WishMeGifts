@@ -13,7 +13,7 @@ import entity.Event;
 
 public class EventsRepository {
 	
-	private final static String DB_URL = "jdbc:mysql://localhost:3306/wish_me_gifts?serverTimezone=GMT";
+	private final static String DB_URL = "jdbc:mysql://localhost:3306/WishMeAGiftBaby?serverTimezone=GMT";
     private final static String DB_USER = "h4rryp0tt3r";
     private final static String DB_PASSWORD = "Horcrux4life!";
     
@@ -70,9 +70,13 @@ public class EventsRepository {
        
         return null;
     }
-    
+    /**
+     * Méthode permettant d'aller récupérer un évènement par son id. 
+     * @param id : identifiant de l'évènement recherché
+     * @return : un objet évènement ou null si l'évènement n'existe pas ou qu'il y a un quelconque problème d'accès à la base. 
+     *
+     */
     public Event findById(Long id) {
-
         try {
             Connection connection = DriverManager.getConnection(
                     DB_URL, DB_USER, DB_PASSWORD

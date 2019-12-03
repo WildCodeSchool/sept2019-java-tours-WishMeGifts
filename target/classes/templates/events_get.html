@@ -40,8 +40,8 @@
 					<label for="gift-nom">Nom du cadeau:</label> 
 					<input class="form-control mt-2" id="gift-nom" name="nom" placeholder="Ex: pyjama bleu " required th:field="*{nom}" type="text">
 					 <label class="mt-2" for="gift-lien">Lien de la page web :</label> <br>
-						<input class="form-control mt-2" id="gift-lien" name="lien" placeholder="Adresse de votre page web" th:field="*{lien}" type="url"> 
-						<input class="btn btn-dark my-4" type="submit" value="Ajouter">
+					<input class="form-control mt-2" id="gift-lien" name="lien" placeholder="Adresse de votre page web" th:field="*{lien}" type="url"> 
+					<input class="btn btn-dark my-4" type="submit" value="Ajouter">
 				
 				</form>
 			</div>
@@ -58,12 +58,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="table-light" th:each="gift : ${giftList}">
+    <tr class="table-light" th:each="aGift : ${giftList}">
    
-        <td scope="row" th:text="${gift.nom} ">name</td>
-        <td th:text="${gift.lien} ">lien</td>
-        <td><a th:href="@{/gift(id=${gift.id})} "> Modifier </a></td>
-        <td><a th:href="@{/gift/delete(id=${gift.id})} "> Supprimer </a></td>
+        <td scope="row" th:text="${aGift.nom} ">name</td>
+        <td th:text="${aGift.lien} ">lien</td>
+        <td><a th:href="@{/gift(id=${aGift.id})} "> Modifier </a></td>
+        <td><a th:href="@{/gift/delete(id=${aGift.id})} "> Supprimer </a></td>
     </tr>
     </tbody>
 </table>
