@@ -48,7 +48,7 @@ public class EventsController {
 	}
 	
 	@PostMapping("/events/{id}/list")
-	public String postEvents(Model model,
+	public String postGifts(Model model,
 							@PathVariable long id,
 							@ModelAttribute Gift gift
 														
@@ -72,5 +72,7 @@ public class EventsController {
 		Event createdEvent = eventRepository.save(intitule, adresse,  message, dateEvent, occasion);
 		return "redirect:/events/"+ createdEvent.getId()+ "/list";
 	}
+	
+
 
 }

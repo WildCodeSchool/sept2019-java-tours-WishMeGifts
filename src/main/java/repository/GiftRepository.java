@@ -1,6 +1,7 @@
 package repository;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,12 +9,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import entity.Gift;
 
 public class GiftRepository{
 	
 
-	    private final static String DB_URL = "jdbc:mysql://localhost:3306/WishMeAGiftBaby?serverTimezone=GMT";
+	    private final static String DB_URL = "jdbc:mysql://localhost:3306/wish_me_gifts?serverTimezone=GMT";
 	    private final static String DB_USER = "h4rryp0tt3r";
 	    private final static String DB_PASSWORD = "Horcrux4life!";
 	    
@@ -103,6 +105,8 @@ public class GiftRepository{
 	                Long id_event_list = resultSet.getLong("id_event_list");
 	                gifts.add(new Gift(id, nom, lien, id_event_list));
 	            }
+	            statement.close();
+				connection.close();
 	            return gifts;
 	        } catch (SQLException e) {
 	            e.printStackTrace();
@@ -111,7 +115,7 @@ public class GiftRepository{
 	    }
 
 	 
-	    public Gift update( String nom, String lien, Long id_event_list, Long id) {
+	    public Gift update(String nom, String lien, Long id_event_list, Long id) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
 	                    DB_URL, DB_USER, DB_PASSWORD
@@ -135,7 +139,7 @@ public class GiftRepository{
 	    }
 
 
-	    public void deleteById(Long id) {
+	    public void deleteById(long id) {
 	        try {
 	            Connection connection = DriverManager.getConnection(
 	                    DB_URL, DB_USER, DB_PASSWORD
@@ -151,6 +155,35 @@ public class GiftRepository{
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
+	        
+	    }
+
+	    public Gift findById(long id) {
+	        try {
+	            Connection connection = DriverManager.getConnection(
+	                    DB_URL, DB_USER, DB_PASSWORD
+	            );
+	            PreparedStatement statement = connection.prepareStatement(
+	                    "SELECT * FROM gift WHERE id = ?;"
+	            );
+	            statement.setLong(1, id);
+	            ResultSet resultSet = statement.executeQuery();
+	            
+	            
+	            if (resultSet.next()) {
+	            	
+	            	String nom = resultSet.getString("nom");
+	                String lien = resultSet.getString("lien"); 
+	                Long id_event_list = resultSet.getLong("id_event_list");
+	            
+	            
+	               
+	                return new Gift(id, nom, lien, id_event_list);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return null;
 	    }		
 
 }
