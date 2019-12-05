@@ -6,7 +6,7 @@ import java.sql.Date;
 
 public class Event {
 	
-	  	private Long id;
+	  	private long id;
 	    private String intitule;
 	    private String adresse;
 	    private String message;
@@ -14,7 +14,7 @@ public class Event {
 	    private String occasion;
 	    
 	    //constructor
-	    public Event(Long id, String intitule, String adresse,  String message, Date dateEvent, String occasion) {
+	    public Event(long id, String intitule, String adresse,  String message, Date dateEvent, String occasion) {
 	        this.id = id;        
 	        this.intitule = intitule;
 	        this.adresse = adresse;
@@ -29,11 +29,11 @@ public class Event {
 	    
 	    //getters and setters
 	    
-	    public Long getId() {
+	    public long getId() {
 			return id;
 		}
 	    
-	    public void setId(Long id) {
+	    public void setId(long id) {
 			this.id = id;
 		}
 
