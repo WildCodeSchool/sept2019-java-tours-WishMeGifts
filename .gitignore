@@ -1,2 +1,7 @@
 *.class
 target/
+.vscode/
+.settings/
+.metadata/
+.project
+.spring
