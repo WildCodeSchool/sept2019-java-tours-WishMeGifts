@@ -3,6 +3,10 @@ h1,h2,h3,h4,h5,h6,p {
     text-align: center;
     color: white;
 }
+body 
+{
+    background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
+}
 
 .logo {
     margin-bottom: 50px;
