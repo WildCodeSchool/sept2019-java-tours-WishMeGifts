@@ -13,7 +13,7 @@ import entity.Event;
 
 public class EventsRepository {
 	
-	private final static String DB_URL = "jdbc:mysql://localhost:3306/WishMeAGiftBaby?serverTimezone=GMT";
+	private final static String DB_URL = "jdbc:mysql://localhost:3306/wish_me_gifts?serverTimezone=GMT";
     private final static String DB_USER = "h4rryp0tt3r";
     private final static String DB_PASSWORD = "Horcrux4life!";
     

@@ -1,8 +1,5 @@
 /* General */
-h1,h2,h3,h4,h5,h6,p {
-    text-align: center;
-    color: white;
-}
+
 body 
 {
     background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
@@ -41,6 +38,7 @@ footer {
 
 /* Animation gift */
 canvas {
+	z-index: -1;
     position: absolute;
     bottom: 0;
     left: 0;
