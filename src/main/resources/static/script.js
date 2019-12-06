@@ -65,3 +65,6 @@ const confNum = Math.floor(w / 4);
 const confs = new Array(confNum).fill().map(_ => new Confetti());
 
 loop();
+$(function () {
+	  $('[data-toggle="tooltip"]').tooltip('show')
+	});
