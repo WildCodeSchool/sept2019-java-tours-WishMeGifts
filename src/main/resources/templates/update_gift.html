@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="general.html :: head"></head>
+
+<body style="background-color: #24BAC7">
+
+	<!-- LOGO  -->
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center my-4">
+				<a th:href="@{/}"><img src="/img/logo.svg"
+					alt="logo wish me gifts"></a>					
+					
+			</div>
+		</div>
+	</div>
+	
+	<!-- IMAGE CADEAU  -->	
+	<img class="m-auto" style="height: 200px; max-width: 100vw; display: block; " src="/img/cado-unsplash.jpg" alt="Card image">
+		
+	<!-- BOX DE PRESENTATION DE LA LISTE  -->		
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-12 text-center lead">
+				<div class="jumbotron">
+					<h1 th:text="| ${event.intitule}|">$intitule</h1>
+					<h2 th:text="| ${event.adresse}|">$adresse</h2>
+					<p  th:text="|${event.message}|">$message</p>
+					<p  th:text="|Date de l'évenement: ${#dates.format(event.dateEvent,'dd/MM/yyyy')}|">$dateEvent</p>
+					<p  th:text="| ${event.occasion}|">$occasion</p>
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- LIGNE DE SEPARATION  -->	
+	<hr>
+		
+	<!-- BOXES D'AJOUT DE VOS CADEAUX & TABLEAU DE CADEAUX déja rempli-->		
+	<div class="container">
+	
+	    <!-- BOXES (NOM & URL) D'AJOUT DE VOS CADEAUX, JUSQU'AU BOUTON Ajouter-->	    	
+		<div class="row">
+			<div class="col">
+				<h1 class="text-center my-4">Vos cadeaux</h1>
+				
+				<form method="post" th:action="@{'/events/'+${event.id} +'/gift'}" th:object="${gift}">
+				
+					<label for="gift-nom">Nom du cadeau:</label> 
+					<input class="form-control mt-2" id="gift-nom" name="nom" placeholder="Ex: pyjama bleu " required th:field="*{nom}" type="text">
+					 <label class="mt-2" for="gift-lien">Lien de la page web :</label> <br>
+					<input class="form-control mt-2" id="gift-lien" name="lien" placeholder="Adresse de votre page web" th:field="*{lien}" type="url"> 
+					<input name="id" th:field="*{id}" type="hidden">
+					<input name="id_event_list" th:field="*{id_event_list}" type="hidden"> 
+					<input class="btn btn-dark my-4" type="submit" value="Modifier">
+				
+				</form>
+			</div>
+		</div>
+			</div>
+	
+	
+	<!-- LIGNE DE SEPARATION  -->	
+	<hr>
+	
+	<!-- LIGNE DE SEPARATION  -->	
+	<hr>	
+	<!-- FOOTER -->	
+	<footer class="text-center mt-4">MADE WITH ❤ BY J.A.L.T CGU ©
+		2019 - V 1.0
+	</footer>
+
+</body>
+
+</html>

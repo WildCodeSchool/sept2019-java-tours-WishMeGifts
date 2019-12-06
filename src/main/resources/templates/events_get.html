@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="home.html :: headHome">
+ 
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center my-4">
+				<a th:href="@{/}"><img src="/img/logo.svg"
+					alt="logo wish me gifts"></a>					
+					
+			</div>
+		</div>
+	</div>
+		<div class="container ">
+		<div class="row">
+			<div class="col-12 text-center jumbotron">
+				<div class="bg-white">
+					<h1 th:text="| ${event.intitule}|">$intitule</h1>
+					<p class="card-header" th:text="| ${event.adresse}|">$adresse</p>
+					<p th:text="| ${event.message}|">$message</p>
+					<p th:text="| Date de l'évenement: ${#dates.format(event.dateEvent,'dd/MM/yyyy')}|">$dateEvent</p>
+					
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+		<hr>
+	<div class="container">
+	<div class="row">
+	<div class="col-12">
+	<div class="card mb-3 ">
+		<table class="table table-hover">
+    <thead>
+    <tr class="table-light">
+    
+        <th scope="col" class="card-header"> Nom du cadeau : </th> 
+        <th scope="col"  > Lien : </th> 
+        <th class="text-dark"></th>
+        <th class="text-dark"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  th:each="aGift : ${giftList}">
+   
+        <td scope="row" th:text="${aGift.nom} " class="text-dark">name</td>
+        <td th:text="${aGift.lien} " class="text-dark">lien</td>
+        <td data-toggle="tooltip" data-placement="top" title="Mofifier"><a th:href="@{/events/__${event.id}__/gift(idGift=${aGift.id})}" class="btn btn-dark " ><i class="fas fa-pencil-alt"></i></a></td>
+        <td data-toggle="tooltip" data-placement="top" title="Effacer"><a th:href="@{/events/__${event.id}__/list/delete(idGift=${aGift.id})} " class="btn btn-dark " > <i class="fas fa-minus-circle" ></i> </a></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</div>	
+</div>
+</div>
+
+	<div class="container">
+		<div class="row">
+		<div class="col-12">
+			<div class="card mb-3">
+				<h3 class="card-header text-center my-4">Saisissez vos cadeaux</h3>
+										
+				<form method="post" th:action="@{'/events/'+${event.id} +'/list'}" th:object="${gift}">
+				
+				    <div class="card-body form-group ">
+					<label class="form-label" for="gift-nom">Nom du cadeau :</label>
+					<input class="form-control" id="gift-nom" name="nom" placeholder="Ex: pyjama bleu " required th:field="*{nom}" type="text">
+					<label class="mt-2" for="gift-lien">Lien de la page web :</label> <br>
+				    <input class="form-control mt-2" id="gift-lien" name="lien" placeholder="Adresse de votre page web" th:field="*{lien}" type="url"> 
+					<button type="submit" class="btn btn-dark mt-3"><i data-toggle="tooltip" data-placement="top" title="Ajouter" class="fas fa-plus-circle"></i></button>
+
+					</div>
+					<div class="text-center">
+					<a  class="btn btn-dark mt-auto text-center mb-4" th:href="@{show}" >Valider la liste </a>
+					</div>
+				</form>
+</div>		
+</div>
+</div>
+</div>
+	<hr>
+	<!--Footer mon ami !-->
+
+       <section th:insert="home.html :: footHome">
+   
+     </section>
+
+</body>
+</html>
