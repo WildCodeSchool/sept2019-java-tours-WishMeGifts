@@ -45,8 +45,8 @@
    
         <td scope="row" th:text="${aGift.nom} " class="text-dark">name</td>
         <td th:text="${aGift.lien} " class="text-dark">lien</td>
-        <td><a th:href="@{/gift(id=${aGift.id})} " class="text-dark"><i class="fas fa-pencil-alt"></i></a></td>
-        <td><a th:href="@{/gift/delete(id=${aGift.id})} " class="text-dark"> <i class="fas fa-minus-circle"></i> </a></td>
+        <td><button type="button" th:href="@{/events/__${event.id}__/gift(idGift=${aGift.id})}" class="btn btn-dark " data-toggle="tooltip" data-placement="top" title="Mofifier"><i class="fas fa-pencil-alt" ></i></button></td>
+        <td><button  type="button" th:href="@{/events/__${event.id}__/list/delete(idGift=${aGift.id})} " class="btn btn-dark " data-toggle="tooltip" data-placement="top" title="Effacer"> <i class="fas fa-minus-circle"></i> </button></td>
     </tr>
     </tbody>
 </table>
@@ -68,11 +68,11 @@
 					<input class="form-control" id="gift-nom" name="nom" placeholder="Ex: pyjama bleu " required th:field="*{nom}" type="text">
 					<label class="mt-2" for="gift-lien">Lien de la page web :</label> <br>
 				    <input class="form-control mt-2" id="gift-lien" name="lien" placeholder="Adresse de votre page web" th:field="*{lien}" type="url"> 
-					<button type="submit" class="btn btn-dark mt-3"><i class="fas fa-plus-circle"></i></button>
+					<button type="submit" class="btn btn-dark mt-3"><i data-toggle="tooltip" data-placement="top" title="Effacer" class="fas fa-plus-circle"></i></button>
 
 					</div>
 					<div class="text-center">
-					<a class="btn btn-dark mt-auto text-center" th:href="@{show}">Valider la liste </a>
+					<a  class="btn btn-dark mt-auto text-center mb-4" th:href="@{show}">Valider la liste </a>
 					</div>
 				</form>
 </div>		
@@ -80,9 +80,30 @@
 </div>
 </div>
 	<hr>
-	
-	<footer th:replace="general.html :: footer" class="text-center my-4"></footer>
+	<!--Footer mon ami !-->
 
+       <section th:fragment="foot">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 mt-3 btn btn-default">
+                   <a th:href="@{/mentions}" class="btn btn-outline-light">Mentions légales - CGU </a>
+                  
+                </div>
+                 <div class="col-6 mt-3 btn btn-default">
+                       <a href="mailto:contact@wmg.com" class="btn btn-outline-light">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     
+     <script type="text/javascript" src="script.js"></script>   
+     </section>
 
 </body>
 </html>
